@@ -1,0 +1,12 @@
+public enum FilterCategory {
+    MIN_PLAYERS,
+    MAX_PLAYERS,
+    MIN_AGE,
+    MIN_PLAYTIME,
+    MAX_PLAYTIME,
+    MIN_WEIGHT,
+    MAX_WEIGHT,
+    MIN_RATING,
+    MAX_RATING,
+    IN_COLLECTION
+}

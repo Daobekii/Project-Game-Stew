@@ -1,0 +1,196 @@
+<html lang="en">
+<head>
+    <title>Project: Game Stew — Stew</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script>
+        function search() {
+            let q = document.getElementById("search-input").value;
+            if (q.length < 3) {
+                updateSearchResults([]);
+                return;
+            }
+            fetch(`search?q=${q}`)
+                    .then((r) => r.json())
+                    .then((j) => updateSearchResults(j));
+        }
+        function removeItem(id) {
+            fetch(`remove_stew_item?id=${id}`).then(() => location.reload());
+        }
+        function updateSearchResults(results) {
+            let res = document.getElementById("results");
+            res.innerHTML = "";
+            results.forEach((r) => {
+                let item = document.createElement("li");
+                item.classList.add("search-rec");
+
+                let year = r["year"];
+                if (year == 0) year = "?";
+
+                item.innerText = r["name"] + " (" + year + ")";
+                item.addEventListener("click", (e) => {
+                    fetch(`add_stew_game?id=${r["id"]}`).then(() => location.reload());
+                });
+
+                res.appendChild(item);
+            });
+        }
+        function updateFilters() {
+            let form = document.getElementById("filters");
+            let values = Object.fromEntries(new FormData(form));
+            fetch(
+                    `update_stew_filters?` +
+                    `min-players=${values["min-players"]}&` +
+                    `max-players=${values["max-players"]}&` +
+                    `min-age=${values["min-age"]}&` +
+                    `min-playtime=${values["min-playtime"]}&` +
+                    `max-playtime=${values["max-playtime"]}&` +
+                    `min-weight=${values["min-weight"]}&` +
+                    `max-weight=${values["max-weight"]}&` +
+                    `min-rating=${values["min-rating"]}`
+            );
+        }
+
+        document.addEventListener("load", updateFilters);
+
+        document.addEventListener("DOMContentLoaded", function () {
+            document
+                    .getElementById("toggleButton")
+                    .addEventListener("click", function () {
+                        let form = document.getElementById("stew-filters");
+                        if (form.style.display === "none" || form.style.display === "") {
+                            form.style.display = "block";
+                        } else {
+                            form.style.display = "none";
+                        }
+                    });
+        });
+    </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>My Stew</h1>
+        <button onclick="window.location.href='/collections'">
+            📦 Collections
+        </button>
+    </header>
+
+    <section id="add-items">
+        <h2>Add Items</h2>
+        <p>Search for games to add to your stew.</p>
+        <div class="search-input-hero">
+            <svg
+                    class="search-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    role="img"
+            >
+                <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M10.6002 12.0498C9.49758 12.8568 8.13777 13.3333 6.66667 13.3333C2.98477 13.3333 0 10.3486 0 6.66667C0 2.98477 2.98477 0 6.66667 0C10.3486 0 13.3333 2.98477 13.3333 6.66667C13.3333 8.15637 12.8447 9.53194 12.019 10.6419C12.0265 10.6489 12.0338 10.656 12.0411 10.6633L15.2935 13.9157C15.6841 14.3063 15.6841 14.9394 15.2935 15.33C14.903 15.7205 14.2699 15.7205 13.8793 15.33L10.6269 12.0775C10.6178 12.0684 10.6089 12.0592 10.6002 12.0498ZM11.3333 6.66667C11.3333 9.244 9.244 11.3333 6.66667 11.3333C4.08934 11.3333 2 9.244 2 6.66667C2 4.08934 4.08934 2 6.66667 2C9.244 2 11.3333 4.08934 11.3333 6.66667Z"
+                ></path>
+            </svg>
+            <label for="search-input" class="accessibility-text"
+            >Search for Games</label
+            >
+            <input
+                    id="search-input"
+                    type="text"
+                    placeholder="Search for Games..."
+                    oninput="search()"
+            />
+        </div>
+        <ul id="results"></ul>
+    </section>
+
+
+
+
+
+
+
+    <section id="stew-items">
+        <h2>Stew Items</h2>
+        <p>These are the games that are currently in your stew.</p>
+        <ul>
+            #foreach($item in $items)
+                <li>
+                    <img alt="stew item cover image" src="$item.getImageUrl()" />
+                    <b>$item.getName()</b>
+                    <button class="remove" onclick="removeItem($item.getID())">Remove</button>
+                </li>
+            #end
+        </ul>
+    </section>
+
+    <footer>
+        <button onclick="window.location.href='/taste'">🥄 Taste</button>
+        <button id="toggleButton">Stew Filters</button>
+        <section id="stew-filters">
+            <h3>Stew Filters</h3>
+            <p>
+                These filters are used to determine which games are added to your
+                stew.
+            </p>
+            <form id="filters" onchange="updateFilters()">
+                <label for="min-players">🧑‍🤝‍🧑 Players Required (at most): </label>
+                <input
+                        id="min-players"
+                        name="min-players"
+                        type="number"
+                        value="999"
+                /><br />
+                <label for="max-players">🧑‍🤝‍🧑 Players Possible (at least): </label>
+                <input
+                        id="max-players"
+                        name="max-players"
+                        type="number"
+                        value="0"
+                /><br />
+                <label for="min-age">🐣 Recommended Age (at least): </label>
+                <input id="min-age" name="min-age" type="number" value="0" /><br />
+                <label for="min-playtime">⏱️ Duration (minutes, at least): </label>
+                <input
+                        id="min-playtime"
+                        name="min-playtime"
+                        type="number"
+                        value="0"
+                /><br />
+                <label for="max-playtime">⏱️ Duration (minutes, at most): </label>
+                <input
+                        id="max-playtime"
+                        name="max-playtime"
+                        type="number"
+                        value="999"
+                /><br />
+                <label for="min-weight">🧩 Complexity (at least): </label>
+                <select id="min-weight" name="min-weight">
+                    <option value="0" selected>Extremely Light</option>
+                    <option value="1">Light</option>
+                    <option value="2">Medium Light</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Medium Heavy</option>
+                    <option value="5">Heavy</option>
+                </select>
+                <label for="max-weight">🧩 Complexity (at most): </label>
+                <select id="max-weight" name="max-weight">
+                    <option value="1">Light</option>
+                    <option value="2">Medium Light</option>
+                    <option value="3">Medium</option>
+                    <option value="4">Medium Heavy</option>
+                    <option value="5" selected>Heavy</option>
+                </select>
+                <label for="min-rating">⭐ Rating (at least): </label>
+                <input id="min-rating" name="min-rating" type="number" value="0" />
+            </form>
+        </section>
+    </footer>
+</div>
+</body>
+</html>

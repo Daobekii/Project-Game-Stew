@@ -1,0 +1,53 @@
+<html lang="en">
+<head>
+    <title>Project: Game Stew — Collections</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        img {
+            max-height: 1.5rem;
+        }
+    </style>
+    <script>
+        function createCollection() {
+            let name = document.getElementById("new-collection-name").value;
+            if (name.length < 1) return;
+
+            fetch(`/create_collection?name=${name}`).then(() => location.reload());
+        }
+    </script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>My Collections</h1>
+    </header>
+
+    <section id="collections-list">
+        <ul>
+            #foreach($coll in $collections)
+                <li>
+                    <img alt="collection icon" src="$coll.getIcon()">
+                    <a href="/collection?id=$coll.getID()">$coll.getName()</a> <i>($coll.getNumberOfGames())</i>
+                    #if($coll.hasNoSpecialRole())
+                        <button class="remove" onclick="fetch('/delete_collection?id=$coll.getID()').then(() => location.reload())">🗑️ Delete</button>
+                    #end
+                </li>
+            #end
+        </ul>
+    </section>
+
+    <section id="add-collection">
+        <h2>Add New Collection</h2>
+        <label for="new-collection-name" hidden>Collection Name</label>
+        <input type="text" id="new-collection-name" placeholder="Collection Name">
+        <button onclick="createCollection()">➕ Create Collection</button>
+    </section>
+
+    <footer>
+        <button onclick="window.location.href='/';">🔙 Back to Stew</button>
+    </footer>
+</div>
+</body>
+</html>

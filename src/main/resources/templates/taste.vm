@@ -1,0 +1,85 @@
+<html lang="en">
+<head>
+    <title>Project: Game Stew — $game.getName()</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script>
+        function addProperty(id) {
+            fetch(`add_stew_property?id=${id}`).then(() => window.location.href = "/");
+        }
+    </script>
+</head>
+<body id="taste">
+<div class="container">
+    <header>
+        <h1>My Stew</h1>
+        <button onclick="window.location.href='/';">🔙 Back to Stew</button>
+    </header>
+
+    <section id="game-details">
+        <div id="game-details-top-container">
+            <img alt="game cover image" src="$game.getImageUrl()">
+            <div id="game-details-top">
+                <div style="display: flex; align-items:center; gap: 40px">
+                    <h2 id="gameName"><a href="https://boardgamegeek.com/boardgame/$game.getID()">$game.getName()</a></h2>
+                    <div id="gameRating">$game.getRoundedRating()</div>
+                </div>
+
+                <div>
+                    <h3>Players</h3>
+                    <p>$game.getMinPlayers() - $game.getMaxPlayers()</p>
+                </div>
+
+                <div>
+                    <h3>Play Time</h3>
+                    <p>$game.getPlaytime() minutes</p>
+                </div>
+
+                <div>
+                    <h3>Complexity</h3>
+                    <p>$game.getRoundedWeight()</p>
+                </div>
+
+                <div>
+                    <h3>Age</h3>
+                    <p>$game.getAge()+</p>
+                </div>
+            </div>
+        </div>
+        <h3>Description</h3>
+        <p>$game.getDescription()</p>
+
+        <div>
+            #if($liked)
+                <button onclick="fetch('/remove_from_likes?id=$game.getID()').then(() => location.reload())">💔 Un-Like</button>
+            #else
+                <button onclick="fetch('/add_to_likes?id=$game.getID()').then(() => location.reload())">💖 Like</button>
+            #end
+            #if($disliked)
+                <button onclick="fetch('/remove_from_dislikes?id=$game.getID()').then(() => location.reload())">😐 Un-Dislike</button>
+            #else
+                <button onclick="fetch('/add_to_dislikes?id=$game.getID()').then(() => location.reload())">👎 Dislike</button>
+            #end
+        </div>
+    </section>
+
+    <section id="commonalities">
+        <h2>Commonalities</h2>
+        <ul>
+            #foreach($comm in $commonalities)
+                #set($commItem = $comm.getItem())
+                <li>
+                    <img src="$commItem.getImageUrl()" alt="game cover image">
+                    <a href="$comm.getUrl()">$commItem.getName()</a>&nbsp;—&nbsp;$comm.getType(): <i>$comm.getName()</i>
+                    #if($comm.getAssociatedID() >= 0)
+                        <button class="addProperty" onclick="addProperty($comm.getAssociatedID())">➕ Add Property to Stew</button>
+                    #end
+                </li>
+            #end
+        </ul>
+    </section>
+</div>
+</body>
+</html>
