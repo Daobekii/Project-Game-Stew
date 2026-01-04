@@ -27,20 +27,20 @@ To broaden gaming horizons and enhance board game nights by making the discovery
 
 ## Showcase
 
-![Homepage](screenshots\stew1.png)
+![Homepage](screenshots/stew1.png)
 Homepage of the website. Allows you to search for board games to add to your stew, filter properties, and finally, taste the stew to get a recommendation. Able to access your collections from here as well.
 
-![Stew Showcase](screenshots\stew2.png)
+![Stew Showcase](screenshots/stew2.png)
 Showcase of how it looks like when you add board games to your stew and filter properties. Multiple filter options possible, ranging from age, players required, duration and more. "Monopoly" and "Phase 10" have been added to the stew.
 
-![My Stew](screenshots\stew3.png)
+![My Stew](screenshots/stew3.png)
 The recommended board game resulting from your selected board games and filters, which appears after pressing "Taste" on the homepage. In this case, the combination of "Monopoly" and "Phase 10" results in "QE". Pressing on "Like" or "Dislike" puts the game in the corresponding collection. Disliked games are being filtered out from the "taste" progress. Properties can also be disliked.
 
-![Commonalities](screenshots\stew4.png)
+![Commonalities](screenshots/stew4.png)
 Display of the commonalities, highlighting why this game is similar to the games, filters and properties you added to the stew. Adding new properties to the stew is possible by clicking on the button.
 
-![My Collections](screenshots\stew5.png)
+![My Collections](screenshots/stew5.png)
 Your collections, which you can access from the homepage. Likes and Dislikes Collection is automatically available. Adding new Collections is also possible, where you can add any board games you want inside of it, e.g. to organize specific board games.
 
-![Like Collection](screenshots\stew6.png)
+![Like Collection](screenshots/stew6.png)
 Inside the "Like" collection. There you can manually add any board games you want with the search bar. "QE" was automatically added to the collection, because of clicking on the "Like" button displayed on the "My Stew" section. The "Dislike" collection works in the same way.
