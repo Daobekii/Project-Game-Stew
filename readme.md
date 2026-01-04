@@ -1,9 +1,9 @@
 # Project Game Stew
 
 ## Team Members
-- @Maxim.Medlyarskiy
-- @Jakob.Harych 
-- @Christoph.Friedrich
+- Maxim Medlyarskiy
+- Jakob Harych
+- Christoph Friedrich
 
 ## Problem Overview
 Board game nights often default to familiar favorites like Monopoly and Catan, leaving new and potentially exciting games unplayed due to perceptions of complexity and resistance to trying something new.
@@ -25,38 +25,22 @@ To broaden gaming horizons and enhance board game nights by making the discovery
 - [Class Diagram Miro Board](https://miro.com/app/board/uXjVKYY2OXE=/)
 - [Style Guide](style_guide.md)
 
-## Todo
-### Implement Basic Front-End
-The following is a loose collection of notes:
-1. Stew
-   - Server hat Stew an Session gebunden
-   - gibt HTML zurück (mit Stew)
-   - User fügt hinzu/entfernt
-2. Recommendation
-   - HTML Template
-   - User fügt zu Collection hinzu
-   - User fügt Property zu stew hinzu
+## Showcase
 
-3. Collections
-   - HTML Template
+![Homepage](src\main\resources\public\screenshots\stew1.png)
+Homepage of the website. Allows you to search for board games to add to your stew, filter properties, and finally, taste the stew to get a recommendation. Able to access your collections from here as well.
 
-4. Collection View
-   - HTML Template
+![Stew Showcase](src\main\resources\public\screenshots\stew2.png)
+Showcase of how it looks like when you add board games to your stew and filter properties. Multiple filter options possible, ranging from age, players required, duration and more. "Monopoly" and "Phase 10" have been added to the stew.
 
-### Implement Recommendation Algorithm
-Also just some loose notes:
-``Stew.taste``
-1. get (some) games from DB (filtered)
-   - filter by stew filters
-   - only games with at least one property in common?
-       * how do you do this with SQL again?
-   - only games with score >= x?
-   - exclude based on allergies?
-   - make sure not to retrieve too many games
-2. rank games by similarity
-   - for each game in stew:
-       * for each game property:
-         - if game property exactly in target game: +1 score
-         - if property kind of in target game: +~0.25 score
-   - modify score for properties in stew
-3. return top game
+![My Stew](src\main\resources\public\screenshots\stew3.png)
+The recommended board game resulting from your selected board games and filters, which appears after pressing "Taste" on the homepage. In this case, the combination of "Monopoly" and "Phase 10" results in "QE". Pressing on "Like" or "Dislike" puts the game in the corresponding collection. Disliked games are being filtered out from the "taste" progress. Properties can also be disliked.
+
+![Commonalities](src\main\resources\public\screenshots\stew4.png)
+Display of the commonalities, highlighting why this game is similar to the games, filters and properties you added to the stew. Adding new properties to the stew is possible by clicking on the button.
+
+![My Collections](src\main\resources\public\screenshots\stew5.png)
+Your collections, which you can access from the homepage. Likes and Dislikes Collection is automatically available. Adding new Collections is also possible, where you can add any board games you want inside of it, e.g. to organize specific board games.
+
+![Like Collection](src\main\resources\public\screenshots\stew6.png)
+Inside the "Like" collection. There you can manually add any board games you want with the search bar. "QE" was automatically added to the collection, because of clicking on the "Like" button displayed on the "My Stew" section. The "Dislike" collection works in the same way.
